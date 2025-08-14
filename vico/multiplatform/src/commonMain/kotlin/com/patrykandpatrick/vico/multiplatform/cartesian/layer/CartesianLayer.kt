@@ -46,6 +46,15 @@ public interface CartesianLayer<M : CartesianLayerModel> : CartesianLayerMarginU
   /** Updates [chartRanges] in accordance with [model]. */
   public fun updateChartRanges(chartRanges: MutableCartesianChartRanges, model: M)
 
+  /** Updates [chartRanges] in accordance with the visible part of the [model]. */
+  public fun updateVisibleChartRanges(
+    chartRanges: MutableCartesianChartRanges,
+    model: M,
+    visibleXRange: ClosedFloatingPointRange<Double>
+  ) {
+    updateChartRanges(chartRanges, model)
+  }
+
   /** Prepares the [CartesianLayer] for a difference animation. */
   public fun prepareForTransformation(
     model: M?,

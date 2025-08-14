@@ -163,7 +163,7 @@ protected constructor(
 
     model.series.subList(firstVisibleEntryIndex, lastVisibleEntryIndex + 1).forEach { entry ->
       candle = candleProvider.getCandle(entry, model.extraStore)
-      val candleInfo = drawingModel?.entries?.get(entry.x) ?: entry.toCandleInfo(yRange)
+      val candleInfo = entry.toCandleInfo(yRange)
       val xSpacingMultiplier = ((entry.x - ranges.minX) / ranges.xStep).toFloat()
       bodyCenterX =
         drawingStart +
@@ -268,6 +268,27 @@ protected constructor(
       rangeProvider.getMaxX(model.minX, model.maxX, model.extraStore),
       rangeProvider.getMinY(model.minY, model.maxY, model.extraStore),
       rangeProvider.getMaxY(model.minY, model.maxY, model.extraStore),
+      verticalAxisPosition,
+    )
+  }
+
+  override fun updateVisibleChartRanges(
+    chartRanges: MutableCartesianChartRanges,
+    model: CandlestickCartesianLayerModel,
+    visibleXRange: ClosedFloatingPointRange<Double>,
+  ) {
+    val visibleEntries = model.series.filter { it.x in visibleXRange }
+    if (visibleEntries.isEmpty()) {
+      chartRanges.tryUpdate(0.0, 0.0, 0.0, 1.0, verticalAxisPosition)
+      return
+    }
+    val minY = visibleEntries.minOf { it.low }
+    val maxY = visibleEntries.maxOf { it.high }
+    chartRanges.tryUpdate(
+      rangeProvider.getMinX(model.minX, model.maxX, model.extraStore),
+      rangeProvider.getMaxX(model.minX, model.maxX, model.extraStore),
+      rangeProvider.getMinY(minY, maxY, model.extraStore),
+      rangeProvider.getMaxY(minY, maxY, model.extraStore),
       verticalAxisPosition,
     )
   }
