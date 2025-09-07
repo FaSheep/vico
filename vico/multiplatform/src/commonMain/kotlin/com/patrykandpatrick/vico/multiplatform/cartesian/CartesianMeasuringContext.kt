@@ -40,6 +40,9 @@ public interface CartesianMeasuringContext : MeasuringContext {
   /** Stores the [CartesianChart]’s _x_ and _y_ ranges. */
   public val ranges: CartesianChartRanges
 
+  /** Stores the global [CartesianChart]’s _x_ and _y_ ranges. */
+  public val globalRanges: CartesianChartRanges
+
   /** Whether scroll is enabled. */
   public val scrollEnabled: Boolean
 
@@ -95,6 +98,7 @@ internal fun rememberCartesianMeasuringContext(
       layoutDirection = layoutDirection,
       model = model,
       ranges = ranges,
+      globalRanges = ranges,
       scrollEnabled = scrollEnabled,
       zoomEnabled = zoomEnabled,
       layerPadding = layerPadding,
