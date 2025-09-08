@@ -49,6 +49,9 @@ public interface CartesianMeasuringContext : MeasuringContext {
   /** Whether zoom is enabled. */
   public val zoomEnabled: Boolean
 
+  /** Whether the Y-axis range should adapt to the visible x-range during scroll and zoom. */
+  public val adaptiveYAxisEnabled: Boolean
+
   /** Stores the [CartesianLayer] padding values. */
   public val layerPadding: CartesianLayerPadding
 
@@ -70,6 +73,7 @@ internal fun rememberCartesianMeasuringContext(
   ranges: CartesianChartRanges,
   scrollEnabled: Boolean,
   zoomEnabled: Boolean,
+  adaptiveYAxisEnabled: Boolean,
   layerPadding: CartesianLayerPadding,
   pointerPosition: Point?,
 ): MutableCartesianMeasuringContext {
@@ -86,6 +90,7 @@ internal fun rememberCartesianMeasuringContext(
     ranges,
     scrollEnabled,
     zoomEnabled,
+    adaptiveYAxisEnabled,
     layerPadding,
     pointerPosition,
     cacheStore,
@@ -101,6 +106,7 @@ internal fun rememberCartesianMeasuringContext(
       globalRanges = ranges,
       scrollEnabled = scrollEnabled,
       zoomEnabled = zoomEnabled,
+      adaptiveYAxisEnabled = adaptiveYAxisEnabled,
       layerPadding = layerPadding,
       pointerPosition = pointerPosition,
       cacheStore = cacheStore,

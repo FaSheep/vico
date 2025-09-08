@@ -33,7 +33,6 @@ import com.patrykandpatrick.vico.multiplatform.cartesian.data.CartesianLayerRang
 import com.patrykandpatrick.vico.multiplatform.cartesian.data.MutableCartesianChartRanges
 import com.patrykandpatrick.vico.multiplatform.cartesian.data.getSliceIndices
 import com.patrykandpatrick.vico.multiplatform.cartesian.getVisibleXRange
-import com.patrykandpatrick.vico.multiplatform.cartesian.layer.CandlestickCartesianLayer.Candle
 import com.patrykandpatrick.vico.multiplatform.cartesian.marker.CandlestickCartesianLayerMarkerTarget
 import com.patrykandpatrick.vico.multiplatform.cartesian.marker.CartesianMarker
 import com.patrykandpatrick.vico.multiplatform.common.Defaults
@@ -132,11 +131,18 @@ protected constructor(
   ): Unit =
     with(context) {
       _markerTargets.clear()
-      drawChartInternal(model, ranges, globalRanges, extraStore.getOrNull(drawingModelKey))
+      drawChartInternal(
+        model,
+        adaptiveYAxisEnabled,
+        ranges,
+        globalRanges,
+        extraStore.getOrNull(drawingModelKey),
+      )
     }
 
   private fun CartesianDrawingContext.drawChartInternal(
     model: CandlestickCartesianLayerModel,
+    adaptiveYAxisEnabled: Boolean,
     ranges: CartesianChartRanges,
     globalRanges: CartesianChartRanges,
     drawingModel: CandlestickCartesianLayerDrawingModel?,
@@ -165,10 +171,14 @@ protected constructor(
 
     model.series.subList(firstVisibleEntryIndex, lastVisibleEntryIndex + 1).forEach { entry ->
       candle = candleProvider.getCandle(entry, model.extraStore)
-      val candleInfo = drawingModel?.entries?.get(entry.x)?.transform(
-        globalYRange = globalYRange,
-        localYRange = yRange,
-      ) ?: entry.toCandleInfo(yRange)
+      val candleInfo = if (adaptiveYAxisEnabled) {
+        drawingModel?.entries?.get(entry.x)?.transform(
+          globalYRange = globalYRange,
+          localYRange = yRange,
+        ) ?: entry.toCandleInfo(yRange)
+      } else {
+        drawingModel?.entries?.get(entry.x) ?: entry.toCandleInfo(yRange)
+      }
       val xSpacingMultiplier = ((entry.x - ranges.minX) / ranges.xStep).toFloat()
       bodyCenterX =
         drawingStart +

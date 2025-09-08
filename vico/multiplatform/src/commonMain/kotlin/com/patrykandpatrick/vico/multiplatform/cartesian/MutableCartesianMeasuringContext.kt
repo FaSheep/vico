@@ -39,6 +39,7 @@ internal class MutableCartesianMeasuringContext(
   override val globalRanges: CartesianChartRanges,
   override var scrollEnabled: Boolean,
   override var zoomEnabled: Boolean,
+  override var adaptiveYAxisEnabled: Boolean,
   override var layerPadding: CartesianLayerPadding,
   override var pointerPosition: Point?,
   override val cacheStore: CacheStore = CacheStore(),
