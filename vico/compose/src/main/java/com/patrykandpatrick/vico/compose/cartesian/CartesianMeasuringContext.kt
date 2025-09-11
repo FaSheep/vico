@@ -40,9 +40,10 @@ internal fun rememberCartesianMeasuringContext(
   ranges: CartesianChartRanges,
   scrollEnabled: Boolean,
   zoomEnabled: Boolean,
+  adaptiveYAxisEnabled: Boolean = true,
   layerPadding: CartesianLayerPadding,
   pointerPosition: Point?,
-): CartesianMeasuringContext {
+): MutableCartesianMeasuringContext {
   val density = LocalDensity.current
   val isLtr = LocalLayoutDirection.current == LayoutDirection.Ltr
   val cacheStore = remember { CacheStore() }
@@ -55,6 +56,7 @@ internal fun rememberCartesianMeasuringContext(
     ranges,
     scrollEnabled,
     zoomEnabled,
+    adaptiveYAxisEnabled,
     layerPadding,
     pointerPosition,
     cacheStore,
@@ -69,6 +71,7 @@ internal fun rememberCartesianMeasuringContext(
       ranges = ranges,
       scrollEnabled = scrollEnabled,
       zoomEnabled = zoomEnabled,
+      adaptiveYAxisEnabled = adaptiveYAxisEnabled,
       layerPadding = layerPadding,
       pointerPosition = pointerPosition,
       cacheStore = cacheStore,

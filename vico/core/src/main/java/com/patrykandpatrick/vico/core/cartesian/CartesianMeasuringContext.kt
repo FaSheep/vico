@@ -32,11 +32,17 @@ public interface CartesianMeasuringContext : MeasuringContext {
   /** Stores the [CartesianChart]’s _x_ and _y_ ranges. */
   public val ranges: CartesianChartRanges
 
+  /** Stores the global [CartesianChart]’s _x_ and _y_ ranges. */
+  public val globalRanges: CartesianChartRanges
+
   /** Whether scroll is enabled. */
   public val scrollEnabled: Boolean
 
   /** Whether zoom is enabled. */
   public val zoomEnabled: Boolean
+
+  /** Whether the Y-axis range should adapt to the visible x-range during scroll and zoom. */
+  public val adaptiveYAxisEnabled: Boolean
 
   /** Stores the [CartesianLayer] padding values. */
   public val layerPadding: CartesianLayerPadding
