@@ -39,7 +39,7 @@ public class MutableCartesianMeasuringContext(
   override var globalRanges: CartesianChartRanges = ranges,
   override var scrollEnabled: Boolean,
   override var zoomEnabled: Boolean,
-  override val adaptiveYAxisEnabled: Boolean,
+  override var adaptiveYAxisEnabled: Boolean,
   override var layerPadding: CartesianLayerPadding,
   override var pointerPosition: Point?,
   cacheStore: CacheStore = CacheStore(),
