@@ -51,9 +51,7 @@ public interface CartesianLayer<M : CartesianLayerModel> : CartesianLayerMarginU
     chartRanges: MutableCartesianChartRanges,
     model: M,
     visibleXRange: ClosedFloatingPointRange<Double>
-  ) {
-    updateChartRanges(chartRanges, model)
-  }
+  )
 
   /** Prepares the [CartesianLayer] for a difference animation. */
   public fun prepareForTransformation(
